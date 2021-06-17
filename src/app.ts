@@ -52,6 +52,8 @@ app.listen(port, (err : any) => {
     console.log('-------------------------------------------');
 })
 
+export {app};
+
 
 
 

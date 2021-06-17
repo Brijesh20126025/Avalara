@@ -4,8 +4,8 @@
   "description": "Avalara test project",
   "main": "index.js",
   "scripts": {
-    "start": "node out/app.js",
-    "build": "tsc -p .",
+    "start": "tsc -p . && npm run test",
+    "build": "tsc -p . && npm run test",
     "test": "mocha -r ts-node/register 'tests/**/*.ts'"
   },
   "author": "",

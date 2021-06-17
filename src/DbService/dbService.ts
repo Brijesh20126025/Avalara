@@ -75,6 +75,7 @@ class DatabaseService {
                 }
                 return resolve({err : null, result : false});
             }).catch((err : any) => {
+                db.close();
                 console.error("### DB error error in list collection query ", err);
                 return resolve({err : err, result : false});
             })

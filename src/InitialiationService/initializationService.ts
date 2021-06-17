@@ -45,7 +45,7 @@ class Init {
                     // init the cache.
                     localCache['collection_created'] = true;
                     try {
-                        __initCache(null);
+                        __initCache(db);
                         return Promise.resolve('intiated the cache');
                     } catch(ex : any) {
                         return Promise.reject(ex);
