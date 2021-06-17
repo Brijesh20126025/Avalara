@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 
 
-//set the DB intialization and pulling to cache data by every process.
+//set the DB intialization cache refresh init.
 //every 30s all the processes will updated their in-memory cache.
 setInterval(() => {
     Init.initDbAndCache()
