@@ -11,8 +11,7 @@ class CacheServiceProvider {
     // fetch the value of a key from DB. 
     static fetch(hash : string) {
 
-        // steps - 
-        // 1. create the DB connection & fecth the cache file from DB.
+        // 1. create the DB connection & fecth the cache from DB.
         return new Promise<{err : any, result : ICache[]}>(async (resolve, reject) => {
             // acquire the connection.
             const connRes : {err : any, conn : any} = await ConnectionManager.createConnectionSync(constants.dbName);
@@ -32,8 +31,6 @@ class CacheServiceProvider {
                 return resolve({err : connRes.err, result : []});
             }
 
-            console.log("###### FETCH DATA %j" , cacheRes);
-
             // read the cache file and send the json response.
             let cacheData : ICache[] = cacheRes.result;
 
@@ -43,8 +40,6 @@ class CacheServiceProvider {
 
             // save this result in local in-memory cache.
             localCache[hash] = cacheData[0].value;
-
-            console.log("Saved in local cache %j", localCache[hash]);
             return resolve({err : null, result : cacheData});
         });
     }
@@ -75,8 +70,7 @@ class CacheServiceProvider {
 
     // update(insert in array form) the value of an existing key.
     static update(hash : string, existingDoc : ICache, key : string, newvalue : string) {
-
-        // push the new data.
+         // push the new data.
         let cacheData : any[] = existingDoc && existingDoc.value || [];
         let filterData : any[] = _.filter(cacheData, (item) => { return item.key != key });
 
@@ -98,16 +92,14 @@ class CacheServiceProvider {
                 return resolve({err : connRes.err, result : null});
             }
             let db = connRes.conn;
+
             // now update the cache in Db.
-            
             let updateRes : {err : any, result : any} = await DatabaseService.updateOneWithOptions(db, collectionNames.cache, filterQuery, updateDoc, {upsert : true});
 
             if(updateRes.err) {
                 console.error("###CacheFetcher.update :: Error in updating the cache value", updateRes.err);
                 return resolve({err : updateRes.err, result : null});
             }
-
-            console.info("### CacheFetcher.update :: Updated the data successfully %j", updateDoc);
 
             // save this info local in memory cache.
             localCache[hash] = filterData;

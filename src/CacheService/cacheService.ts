@@ -14,10 +14,6 @@ class CacheService {
 
         const key : string = req.params.key;
         const value : string = req.body;
-
-        console.log("###### KEY ", key, typeof(key));
-        console.log("##### value ", value, typeof(value));
-
         if(!key || !key.length) {
             let error : IError = {
                 status : 400,
@@ -69,15 +65,13 @@ class CacheService {
             return next(error);
         }
 
-        console.log("Successfully save the key : value " + key + " : " + value);
-        res.end("\nOK");
+        //console.log("Successfully saved the key : value " + key + " : " + value);
+        res.status(200).end("OK");
         return;
     }
 
     static async getKey(req : Request, res : Response, next : Function) {
-        console.log("########### INSIDE THE GET KEY Code ", req.params);
         let key : string = req.params.key;
-
         if(!key || !key.length) {
             let error : IError = {
                 status : 400,
@@ -91,14 +85,13 @@ class CacheService {
                               .createHmac('md5', constants.hashSecrect) // using MD5 as encryption algo.
                               .update(key)
                               .digest('hex');
-
-        console.log("hash for the get API key ", hash);
-
+        
         // first check this key in local in-memory cache if found(cache hit)
         // then return from here. else hit the DB(cache miss).
         if(localCache[hash]) {
             
             console.log("Serving from local cache %j", localCache[hash]);
+            // IN CASE OF HASH COLLISION.
             // if there are multiple values stored at this hash key.
             let filter : any[] = _.filter(localCache[hash], (item) => {
                 return item.key === key;
@@ -123,7 +116,7 @@ class CacheService {
         }
         
         if(cacheRes.result && !cacheRes.result.length) {
-            res.status(200).end("NOT_FOUND");
+            res.status(200).end("KEY_NOT_FOUND");
             return;
         }
 
@@ -131,8 +124,7 @@ class CacheService {
         let filter : any[] = _.filter(cacheData, (item) => {
             return item.key === key;
         });
-        console.log("Value to send %j", filter[0], typeof(filter[0]));
-        res.end(filter[0].value);
+        res.status(200).end(filter[0].value);
         return;
     }
 }

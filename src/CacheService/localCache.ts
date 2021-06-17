@@ -1,1 +1,1 @@
-export const localCache : any = {};
+export let localCache : any = {};

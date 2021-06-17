@@ -25,13 +25,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 
 
-// set the DB intialization and pulling to cache data by every process.
-// setInterval(() => {
-//     Init.initDbAndCache()
-//         .then(() => {
-//             console.info("### Init ", )
-//         }).catch((ex) => console.error(ex));
-// }, 30000); //every 30s all the processes will updated their in-memory cache.
+//set the DB intialization and pulling to cache data by every process.
+//every 30s all the processes will updated their in-memory cache.
+setInterval(() => {
+    Init.initDbAndCache()
+        .then((res) => {
+            console.info("### Inited Cache Succssefully");
+        }).catch((ex) => console.error(ex));
+}, 30000); 
 
 // define the routes.
 // cache set API

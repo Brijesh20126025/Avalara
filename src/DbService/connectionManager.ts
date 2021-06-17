@@ -1,7 +1,4 @@
-import { any } from 'joi';
 import mongoose from 'mongoose';
-import { fileURLToPath } from 'url';
-
 class ConnectionManager {
 
     static createConnectionSync(dbName : string) {
@@ -12,31 +9,35 @@ class ConnectionManager {
             const connectionString : string = __getConnectionString(dbName);
 
             // connect to DB
-            mongoose.connect(connectionString, options);
+            try {
+                mongoose.connect(connectionString, options);
+                const db : mongoose.Connection = mongoose.connection && mongoose.connection;
 
-            const db : mongoose.Connection = mongoose.connection;
-
-            db.on('error', (err) => {
-                console.error('####connectionManager.createConnection :: Error connecting to cloud db ' + connectionString);
-                return resolve({err : err, conn : null});
-            });
-
-            db.on('open', (err : any) => {
-                // we're connected!
-                console.log("We are now connected to db " + dbName + " id " + db.id);
-
-                // cache the connection. (if need it else ignore)
-                // file.cache = db;
-                return resolve({err : err, conn : db});
-            });
-
-            db.on('close', () => {
-                console.info("#Db connection closed " + dbName + " id " + db.id);
-            });
+                db.on('error', (err : any) => {
+                    console.error('####connectionManager.createConnection :: Error connecting to cloud db ' + connectionString);
+                    return resolve({err : err, conn : null});
+                });
+    
+                db.on('open', (err : any) => {
+                    // we're connected!
+                    console.log("We are now connected to db " + dbName + " id " + db.id);
+                    // cache the connection. (if need it else ignore)
+                    // {conn : db}
+                    return resolve({err : err, conn : db});
+                });
+    
+                db.on('close', () => {
+                    console.info("#Db connection closed " + dbName + " id " + db.id);
+                });
+            }catch(ex : any) {
+                console.error("$$$$$$$$$ DB CONNECTION ERROR %j", ex);
+                return resolve({err : ex, conn : null});
+            }
         });
     }
 }
 
+// Private functions..
 function __getConnectionString(dbName : string) : string {
 
     /*   just using the db user name here in plain text but in production system
@@ -45,7 +46,6 @@ function __getConnectionString(dbName : string) : string {
          ask user to provide the user name and password in evn process.
          /--- IGNORING THE SECURITY ASPECT HERE ----/
     */ 
-    
     const dbUserName : string = process.env.DB_USER_NAME || 'avalara';
     const password : string = process.env.DB_PASSWORD || 'avalara@123';
     const connectionString = `mongodb+srv://${dbUserName}:${password}@cluster0.uvl1s.mongodb.net/${dbName}?retryWrites=true&w=majority`;

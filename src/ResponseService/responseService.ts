@@ -5,12 +5,12 @@ import { Func } from 'mocha';
 
 class ResponseService {
 
-    // Error response service sender.
+    // Error response sender service.
     static error(err : IError, req : Request, res : Response, next : Function) {
 
         let httpErrResponse : any = {
             status : err && err.status || 500,
-            message : err && err.message || 'Internal server error. try after some time.',
+            message : err && err.message || 'Internal server error. please try after some time.',
             data : err && err.data,
             stack : err && err.stack || null
         }
