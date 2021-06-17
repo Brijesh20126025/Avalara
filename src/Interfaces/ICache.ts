@@ -1,4 +1,4 @@
 export interface ICache {
     key : string;
-    value : ICache[];
+    value : any[];
 }

@@ -5,9 +5,6 @@ import { ResponseService } from '../../ResponseService/responseService';
 const router : Router = express.Router();
 
 
-router.post('/:key', CacheService.setKey, ResponseService.error);
+router.get('/:key', CacheService.getKey, ResponseService.error);
 
-export { router as set};
-
-
-
+export { router as get};
