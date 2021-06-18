@@ -54,11 +54,10 @@ curl -X POST \
   
  GET API CURL - 
  ````````
- curl -X GET \
+curl -X GET \
   http://localhost:5000/api/v1/get/you_key_here \
   -H 'cache-control: no-cache' \
-  -H 'postman-token: 7e247260-8121-8358-7cde-fda747f3b66d' \
-  -d your_key_value
+  -H 'postman-token: ff5e1912-62e1-626f-c4ef-8b1ec7c40de4'
   `````````````````
  
 
