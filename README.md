@@ -43,6 +43,25 @@ If you want to run server on some different port then run -
 PORT=1234 node out/app.js
 ```
 
+SET API CURL - 
+`````````
+curl -X POST \
+  http://localhost:3000/api/v1/set/you_key_here \
+  -H 'cache-control: no-cache' \
+  -H 'postman-token: 240cb825-645d-74a6-caaa-fe9ba5aa2f9c' \
+  -d your_key_value
+  `````````
+  
+ GET API CURL - 
+ ````````
+ curl -X GET \
+  http://localhost:5000/api/v1/get/you_key_here \
+  -H 'cache-control: no-cache' \
+  -H 'postman-token: 7e247260-8121-8358-7cde-fda747f3b66d' \
+  -d your_key_value
+  `````````````````
+ 
+
 ## Implementation Logic
 
 I am using the MongoDB atlas free(256MB) cloud storage to store the cache data.
