@@ -52,7 +52,7 @@ don't remove the content-type header, it won't work in case u remove the content
   
  GET API CURL - 
  ````````
-curl -X GET http://localhost:3000/api/v1/get/you_key_here -H  'content-type:text/plain'  -d 'your_key_value'
+curl -X GET http://localhost:5000/api/v1/get/you_key_here -H  'content-type:text/plain'  -d 'your_key_value'
   `````````````````
  
 
