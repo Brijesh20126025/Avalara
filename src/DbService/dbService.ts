@@ -68,8 +68,8 @@ class DatabaseService {
     static checkIfCollectionExists(db : mongoose.Connection, collectionName : string) {
         return new Promise<{err : any, result : boolean}>((resolve, reject) => {
             db.db.listCollections({}, {nameOnly : true}).toArray().then((names : any[]) => {
-                let collecitonNames : string[] = _.map(names, 'name');
-                if(collecitonNames.indexOf(collectionNames.cache) >= 0) {
+                let collsNames : string[] = _.map(names, 'name');
+                if(collsNames.indexOf(collectionNames.cache) >= 0) {
                     db.close();
                     return resolve({err : null, result : true});
                 }

@@ -96,7 +96,7 @@ class CacheService {
             let filter : any[] = _.filter(localCache[hash], (item) => {
                 return item.key === key;
             });
-            res.end(filter[0].value);
+            res.status(200).end(filter[0].value);
             return;
         }
 
