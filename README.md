@@ -45,7 +45,7 @@ PORT=1234 node out/app.js
 
 SET API CURL - 
 `````````
-curl -X POST http://localhost:3000/api/v1/set/you_key_here -H  'content-type:text/plain'  -d 'your_key_value'
+curl -X POST http://localhost:3000/api/v1/set/you_key_here -H  'content-type:text/plain'
 
 don't remove the content-type header, it won't work in case u remove the content-type header.
   `````````
