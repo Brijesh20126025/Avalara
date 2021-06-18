@@ -45,19 +45,14 @@ PORT=1234 node out/app.js
 
 SET API CURL - 
 `````````
-curl -X POST \
-  http://localhost:3000/api/v1/set/you_key_here \
-  -H 'cache-control: no-cache' \
-  -H 'postman-token: 240cb825-645d-74a6-caaa-fe9ba5aa2f9c' \
-  -d your_key_value
+curl -X POST http://localhost:3000/api/v1/set/you_key_here -H  'content-type:text/plain'  -d 'your_key_value'
+
+don't remove the content-type header, it won't work in case u remove the content-type header.
   `````````
   
  GET API CURL - 
  ````````
-curl -X GET \
-  http://localhost:5000/api/v1/get/you_key_here \
-  -H 'cache-control: no-cache' \
-  -H 'postman-token: ff5e1912-62e1-626f-c4ef-8b1ec7c40de4'
+curl -X GET http://localhost:3000/api/v1/get/you_key_here -H  'content-type:text/plain'  -d 'your_key_value'
   `````````````````
  
 
